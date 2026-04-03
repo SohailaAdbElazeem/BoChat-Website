@@ -25,16 +25,18 @@ html[dir="ltr"] {
 }
 /*  main-section*/
 .main-section {
+  
   background:linear-gradient(to right ,#D72229 20%,#00000000 );  
 }
 .main-section .header {
-     margin: auto;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     width: 80%;
-     height: 65px;
-     padding: 40px 10px;
+      margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;   
+    width: 100%;
+    max-width: 1400px;
+    height: 65px;
+   padding: 40px 40px;
 }
 .logo {
     width: 44px;
@@ -42,7 +44,8 @@ html[dir="ltr"] {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+flex-shrink: 0;
+ }
 .logo img{
     width: 30.52px;
     height: 37px;
@@ -140,7 +143,21 @@ html[dir="ltr"] .main-content p {
   justify-content: center;
   padding: 0 30px; 
 
+
+  overflow-x: hidden;
+  position: relative;
+  scrollbar-width: none;
+
  }
+ .rate::-webkit-scrollbar {
+  display: none;
+} 
+.rate-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  width: max-content;
+}
 .rate-card {
   display: flex;
   align-items: center;
@@ -173,9 +190,30 @@ html[dir="ltr"] .main-content p {
     font-weight: 400;
     line-height: 1.625rem;
 }
-
+ @keyframes rateScrollRTL {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+@keyframes rateScrollLTR {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 /* Responsive of Main section */
 @media (min-width: 768px) and (max-width: 1200px) {
+     .main-section .header {
+         padding: 0px 70px; 
+    }
+      .logo  {
+        padding-top: 15px;
+    }
     .main-content h1 {
      font-size: 3.4rem;
    
@@ -187,9 +225,91 @@ html[dir="ltr"] .main-content p {
     font-size: 20px;
     line-height: 30px;
  }
-
+  .rate {
+    overflow-x: visible !important;
+    justify-content: center;
+    cursor: default !important; 
+   }
+  
+  .rate-wrapper {
+    width: auto !important;
+    justify-content: center;
+    animation: none !important; 
+  }
+    .rate-wrapper .duplicate {
+    display: none;
+  }
+  
 }
-@media (max-width: 767px) { 
+@media (min-width: 992px) {
+  .rate {
+    overflow-x: visible;
+    justify-content: center;
+   }
+  
+  .rate-wrapper {
+    width: auto;
+    justify-content: center;
+  }
+    .rate-wrapper .duplicate {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  .rate {
+    overflow-x: auto;
+    cursor: grab;
+  }
+  
+  .rate:active {
+    cursor: grabbing;
+  }
+  
+  .rate-wrapper {
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+   .rate-wrapper .duplicate {
+    display: none;
+  }
+  
+   .rate:hover .rate-wrapper {
+    animation-play-state: paused;
+  }
+  
+   html[dir="rtl"] .rate-wrapper {
+    animation-name: rateScrollRTL;
+  }
+  
+   html[dir="ltr"] .rate-wrapper {
+    animation-name: rateScrollLTR;
+  }
+}
+
+@media (min-width: 769px) {
+   .rate {
+    overflow-x: visible !important;
+    justify-content: center;
+    cursor: default !important;
+  }
+  
+  .rate-wrapper {
+    width: auto !important;
+    justify-content: center;
+    animation: none !important;
+  }
+  
+  .rate-wrapper .duplicate {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) { 
+    .main-section .header {
+        height: 62px;
+        padding: 40px 30px; 
+    }
         .logo img{
             width: 44px;
             height: 52px;
@@ -232,7 +352,15 @@ html[dir="ltr"] .main-content p {
         .main-buttons .btn-details {
             width: 13.6875rem;
         }
-
+        .rate-wrapper {
+             animation-duration: 5s;
+             display: flex;
+            gap: 25px;
+            width: max-content;
+            animation-duration: 15s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
          .rate {
             overflow-x: auto;          
             justify-content: flex-start; 
@@ -241,15 +369,27 @@ html[dir="ltr"] .main-content p {
             cursor: grab;
         }
 
+   .rate-wrapper .duplicate {
+    display: flex;
+  }
+   .rate:hover .rate-wrapper {
+    animation-play-state: paused;
+  }
+    html[dir="rtl"] .rate-wrapper {
+    animation-name: rateScrollRTL;
+  }
+  
+  html[dir="ltr"] .rate-wrapper {
+    animation-name: rateScrollLTR;
+  }
+
         .rate::-webkit-scrollbar {
             display: none; 
         }
 
         .rate-card {
-            flex: 0 0 calc(50% - 15px); 
-            min-width: 0;
-            flex-shrink: 0;
-            scroll-snap-align: start;  
+            flex: 0 0 300px; 
+            
         }
 
         html[dir="ltr"] .rate-card {
@@ -270,66 +410,66 @@ html[dir="ltr"] .main-content p {
    
         }
 }
-  @media (max-width: 500px) {
-    .logo img {
-        width: 35px;
-        height: 40px;
-        padding-top: 3px;
-    }
-    .main-content h1 {
-        font-size: 1.4375rem;
-        line-height: 1.3;
-    }
-
-    html[dir="ltr"] .main-content h1 {
-        font-size: 1.3rem;
-        letter-spacing: 0.5px;
-    }
-    .main-content p {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-    html[dir="ltr"] .main-content p {
-        font-size: 0.85rem;
-        line-height: 1.5;
-    }
-        .main-content p br {
-        display: none;
-    }
-    .main-buttons {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .main-buttons .btn {
-        width: 100%;         
-        max-width: 250px;    
-        height: 45px;
-        font-size: 0.9rem;
-    }
-    .rate {
-        overflow-x: auto;
-        gap: 10px;
-        padding: 0 10px;
-    }
-
-    .rate-card {
-        flex: 0 0 80%;
-    }
-    .bottom-footer {
-        height: 18px;
-        gap: 5px;
-    }
-
-    .bottom-footer ul li a {
-        font-size: 9px;
-    }
-
-    .bottom-footer .BoChat-img img {
-        height: 16px;
-    }
+@media (max-width: 500px) {
+  .main-section .header {
+    padding: 40px 20px; 
+  }
+  .logo img {
+    width: 38px;
+    height: 40px;
+    padding-top: 3px;
+  }
+  .main-content h1 {
+    font-size: 1.4375rem;
+    line-height: 1.3;
+  }
+  html[dir="ltr"] .main-content h1 {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+  }
+  .main-content p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  html[dir="ltr"] .main-content p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .main-content p br {
+    display: none;
+  }
+  .main-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .main-buttons .btn {
+    width: 100%;         
+    max-width: 250px;    
+    height: 45px;
+    font-size: 0.9rem;
+  }
+  .rate {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .rate-wrapper {
+    animation-duration: 12s;
+  }
+  .rate-card {
+    flex: 0 0 270px;
+  }
+  .bottom-footer {
+    height: 18px;
+    gap: 5px;
+  }
+  .bottom-footer ul li a {
+    font-size: 9px;
+  }
+  .bottom-footer .BoChat-img img {
+    height: 16px;
+  }
 }
 
   /* features section */
@@ -373,7 +513,11 @@ line-height: 25px;
   cursor: grab;
 }
 html[dir="rtl"] .slider-track {
-  animation: scrollRTL 20s linear infinite;
+  animation: scrollRTL 8s linear infinite;
+  transform: translateX(0);
+}
+html[dir="ltr"] .slider-track {
+  animation: scrollLTR 8s linear infinite;
   transform: translateX(0);
 }
 .slider-track:hover,
@@ -417,6 +561,8 @@ html[dir="rtl"] .slider-track {
             flex-shrink: 0;
         }
  }
+
+ 
 /* about-bochat  Section */
 .about-bochat {
    margin:4.375rem auto;
@@ -624,9 +770,14 @@ html[dir="ltr"] .offer-form input[type="submit"] {
   .offer-section .offer-text p {
     font-size: 26px;   
   }
+   html[dir="ltr"]  .offer-cta {
+    font-size: 20px;
+   margin: auto;
+   width: 21.875rem;
+   height: 3.75rem;
+}
 }
 @media (max-width: 767px) {
-
   .offer-section {
     flex-direction: column;
     align-items: center;
@@ -661,9 +812,14 @@ html[dir="ltr"] .offer-form input[type="submit"] {
      text-align: center;
     color: #FFFFFF;
   }
- 
+ html[dir="ltr"]   .title-form { 
+    word-spacing: 1.4;
+    letter-spacing: 1.6;
+    font-size: 35px;
+ }
  html[dir="ltr"]  .offer-cta {
-    width:355px ;
+    width:300px ;
+    margin: auto;
 }
 }
 
@@ -890,6 +1046,12 @@ html[dir="rtl"] footer p a {
 html[dir="ltr"] footer p a {
     font-size: 13px;
  }
+ .footer-text {
+    padding: 0 20px;
+ }
+   html[dir="ltr"] .footer-text p a {
+        font-size: 8px;
+    } 
 .footer-text img {
    width: 30px;
 }
@@ -909,21 +1071,253 @@ html[dir="ltr"] footer p a {
     html[dir="rtl"] footer p a {
         font-size: 10px;
     }
-    html[dir="ltr"] footer p a {
-        font-size: 18px;
+  html[dir="ltr"] footer p a {
+        font-size: .75rem;
     }
     .footer-text img {
         width: 28px;
     }
-    .bottom-footer {
+    footer .bottom-footer {
+        height: 40px;              
+        display: flex;            
+        align-items: center;       
+        justify-content: space-between;
+        padding: 0 20px;       
+        box-sizing: border-box;
+    }
+    footer .bottom-footer ul {
+        display: flex;
+        gap: 12px;               
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        align-items: center;   
+    }
+    footer .bottom-footer ul li a {
+        font-size: 12px;
+        line-height: 1;        
+        display: inline-block;
+    }
+    footer .bottom-footer .BoChat-img img {
         height: 20px;
+        display: block;
+        vertical-align: middle;
     }
-    .bottom-footer ul li a {
-         font-size: 10px;
-     }
-        .bottom-footer .BoChat-img img {
-    height: 20px; 
-    }
+}
+/* ggggg */
  
+.slider {
+  padding: 20px;
+  margin-top: 1.25rem;
+  overflow: hidden;           
 }
 
+.slider::-webkit-scrollbar {
+  display: none; 
+}
+
+.slider .card {
+  flex: 0 0 calc((100% - 4 * 15px) / 5);
+  min-width: 0; 
+  background-color: #F3F3F3;
+  border-radius: 1.375rem;
+  padding: 1.25rem;
+  cursor: pointer;
+  
+}
+
+.slider .card h2 {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: white;
+}
+
+.slider .card h3 { 
+  font-size: 1.375rem;
+  font-weight: 700;
+}
+
+.slider .card p { 
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+/* =============== السلایدر الرئيسي =============== */
+.slider-track {
+  display: flex;
+  gap: 15px;
+  /* width: max-content;           */
+  animation: scrollRTL 18s linear infinite;   /* ← غير الرقم ده للسرعة */
+  cursor: grab;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+/* ================= Animations (الصحيح) ================= */
+@keyframes scrollRTL {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }     /* مهم: -50% */
+}
+
+@keyframes scrollLTR {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+ html[dir="rtl"] .slider-track {
+  animation-name: scrollRTL;
+}
+
+html[dir="ltr"] .slider-track {
+  animation-name: scrollLTR;
+}
+
+/* Responsive */
+@media (min-width: 768px) and (max-width: 1200px) {
+  .slider .card {
+    flex: 0 0 calc((100% - 2 * 15px) / 3);
+  }
+}
+
+@media (max-width: 767px) { 
+  .slider {
+    overflow-x: auto;
+    padding: 20px 10px;
+  }
+  .slider .card {
+    flex: 0 0 60%;
+    max-width: 60%;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 500px) { 
+  .slider .card {
+    flex: 0 0 90%;
+    max-width: 90%;
+    flex-shrink: 0;
+  }
+}
+
+ 
+/*  */
+.slider {
+  padding: 20px;
+  margin-top: 1.25rem;
+  overflow: hidden;           
+}
+
+.slider::-webkit-scrollbar {
+  display: none; 
+}
+
+.slider .card {
+  flex: 0 0 300px;
+  min-width: 0; 
+  background-color: #F3F3F3;
+  border-radius: 1.375rem;
+  padding: 1.25rem;
+  cursor: pointer;
+}
+
+.slider .card h2 {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: white;
+}
+
+.slider .card h3 { 
+  font-size: 1.375rem;
+  font-weight: 700;
+}
+
+.slider .card p { 
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+/* =============== السلايدر الرئيسي =============== */
+.slider-track {
+  display: flex;
+  gap: 15px;
+  width: max-content;
+  cursor: grab;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+.slider-track:active {
+  cursor: grabbing;
+}
+
+/* ================= Animations ================= */
+/* العربية - تتحرك لليمين */
+@keyframes scrollRTL {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* الإنجليزية - تتحرك لليسار */
+@keyframes scrollLTR {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* تطبيق الاتجاه حسب اللغة */
+html[dir="rtl"] .slider-track {
+  animation-name: scrollRTL;
+ }
+
+html[dir="ltr"] .slider-track {
+  animation-name: scrollLTR;
+ }
+
+/* Responsive */
+@media (min-width: 768px) and (max-width: 1200px) {
+  .slider .card {
+    flex: 0 0 300px;
+    flex: 0 0 300px;
+  }
+}
+
+@media (max-width: 767px) { 
+  .slider {
+    overflow-x: auto;
+    padding: 20px 10px;
+  }
+  .slider .card {
+    flex: 0 0 300px;
+    max-width: 60%;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 500px) { 
+  .slider .card {
+    flex: 0 0 300px;
+    max-width: 90%;
+    flex-shrink: 0;
+  }
+}
+
+ 
+
+ 
+
+ 
+ 

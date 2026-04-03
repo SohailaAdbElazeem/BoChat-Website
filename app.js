@@ -77,130 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Translate 
-let currentLang = localStorage.getItem("lang") || "ar"; 
-
-window.addEventListener("DOMContentLoaded", () => {
-  setLanguage(currentLang);
-  updateButtonText();
-});
-function setLanguage(lang = "ar") {
-  const elements = document.querySelectorAll("[data-ar]");
-  const inputs = document.querySelectorAll("input[data-ar]");
-
-  elements.forEach(el => {
-    if(el.tagName !== "INPUT") el.innerHTML = el.getAttribute(`data-${lang}`);
-  });
-
-  inputs.forEach(input => {
-    if(input.type === "submit") {
-      input.value = input.getAttribute(`data-${lang}`);
-    } else {
-      input.placeholder = input.getAttribute(`data-${lang}`);
-    }
-  });
-
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  localStorage.setItem("lang", lang);
-}
-const btn = document.getElementById("translateBtn");
-btn.addEventListener("click", e => {
-  e.preventDefault();
-  currentLang = currentLang === "ar" ? "en" : "ar";
-  setLanguage(currentLang);
-  updateButtonText();
-});
-
-function updateButtonText() {
-  btn.innerText = currentLang === "ar" ? "English" : "العربية";
-}
-
-
-// // when go to about & connect us
-// // كل اللينكات اللي هتنقل للصفحات الثانية
-// const langLinks = document.querySelectorAll(".lang-link");
-
-// langLinks.forEach(link => {
-//   link.addEventListener("click", e => {
-//     const currentLang = localStorage.getItem("lang") || "ar";
-//     // منع الانتقال الافتراضي
-//     e.preventDefault();
-//     // إضافة لغة في الرابط
-//     const url = new URL(link.href);
-//     url.searchParams.set("lang", currentLang);
-//     // انتقل للرابط الجديد
-//     window.location.href = url.toString();
-//   });
-// });
-// // قراءة اللغة من الرابط أو من التخزين
-// const urlParams = new URLSearchParams(window.location.search);
-// const langFromURL = urlParams.get("lang");
-// let currentLang = langFromURL || localStorage.getItem("lang") || "ar";
-
-// خزنها في localStorage
-// localStorage.setItem("lang", currentLang);
-
-// استدعي كود الترجمة كما في الصفحة الرئيسية
-// setLanguage(currentLang);
-// updateButtonText();
-// Slider
-document.documentElement.dir = document.documentElement.dir || "rtl"; 
-const track = document.querySelector('.slider-track');
-const cards = document.querySelectorAll('.card');
-let currentTranslate = 0;
-let isDragging = false;
-let startX = 0;
-let prevTranslate = 0;
-
-const direction = document.documentElement.dir === "rtl" ? -1 : 1;
-const speed = 1;
-function animate() {
-  if (!isDragging) {
-    currentTranslate += speed * direction;
-    const totalWidth = (cards[0].offsetWidth + 15) * (cards.length / 2);
-    
-    if (currentTranslate <= -totalWidth) currentTranslate = 0;
-    if (currentTranslate >= 0) currentTranslate = -totalWidth;
-
-    track.style.transform = `translateX(${currentTranslate}px)`;
-  }
-  requestAnimationFrame(animate);
-}
-animate();
-// stop Hover
-cards.forEach(card => {
-  card.addEventListener("mouseenter", () => isDragging = true);
-  card.addEventListener("mouseleave", () => isDragging = false);
-});
-
-// Drag
-track.addEventListener("mousedown", e => {
-  isDragging = true;
-  startX = e.pageX;
-  prevTranslate = currentTranslate;
-});
-track.addEventListener("mousemove", e => {
-  if (!isDragging) return;
-  currentTranslate = prevTranslate + (e.pageX - startX);
-  track.style.transform = `translateX(${currentTranslate}px)`;
-});
-track.addEventListener("mouseup", () => isDragging = false);
-track.addEventListener("mouseleave", () => isDragging = false);
-
-// Touch
-track.addEventListener("touchstart", e => {
-  isDragging = true;
-  startX = e.touches[0].clientX;
-  prevTranslate = currentTranslate;
-});
-track.addEventListener("touchmove", e => {
-  if (!isDragging) return;
-  currentTranslate = prevTranslate + (e.touches[0].clientX - startX);
-  track.style.transform = `translateX(${currentTranslate}px)`;
-});
-track.addEventListener("touchend", () => isDragging = false);
-
-
+ 
 // SendEmail
   const form = document.getElementById('investmentForm');
   const inputs = form.querySelectorAll('input, label');
@@ -271,3 +148,110 @@ form.addEventListener('submit', function(e){
   });
 
 });
+  
+ 
+ // Translate
+let currentLang = localStorage.getItem("lang") || "en"; 
+
+window.addEventListener("DOMContentLoaded", () => {
+  setLanguage(currentLang);
+  updateButtonText();
+});
+
+function setLanguage(lang = "ar") {
+  const elements = document.querySelectorAll("[data-ar]");
+  const inputs = document.querySelectorAll("input[data-ar]");
+
+  elements.forEach(el => {
+    if(el.tagName !== "INPUT") el.innerHTML = el.getAttribute(`data-${lang}`);
+  });
+
+  inputs.forEach(input => {
+    if(input.type === "submit") {
+      input.value = input.getAttribute(`data-${lang}`);
+    } else {
+      input.placeholder = input.getAttribute(`data-${lang}`);
+    }
+  });
+
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  localStorage.setItem("lang", lang);
+  
+  // تحديث حركة السلايدر يدوياً
+  updateSliderAnimation(lang);
+}
+
+// دالة إضافية لتحديث حركة السلايدر
+function updateSliderAnimation(lang) {
+  const sliderTrack = document.querySelector('.slider-track');
+  if (!sliderTrack) return;
+  
+  // إعادة تعيين الأنيميشن
+  sliderTrack.style.animation = 'none';
+  
+  // فرض إعادة رسم العنصر
+  sliderTrack.offsetHeight;
+  
+  // تطبيق الأنيميشن المناسبة
+  if (lang === 'ar') {
+    sliderTrack.style.animation = 'scrollRTL 15s linear infinite';
+  } else {
+    sliderTrack.style.animation = 'scrollLTR 15s linear infinite';
+  }
+}
+
+const btn = document.getElementById("translateBtn");
+if (btn) {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    currentLang = currentLang === "ar" ? "en" : "ar";
+    setLanguage(currentLang);
+    updateButtonText();
+  });
+}
+
+function updateButtonText() {
+  if (btn) {
+    btn.innerText = currentLang === "ar" ? "English" : "العربية";
+  }
+}
+
+// تكرار البطاقات لجعل الحركة لا نهائية
+function duplicateCards() {
+  const track = document.querySelector('.slider-track');
+  if (track) {
+    const cards = track.innerHTML;
+    track.innerHTML = cards + cards; // تكرار المحتوى مرتين
+  }
+}
+
+// استدعاء الدالة عند تحميل الصفحة
+window.addEventListener("DOMContentLoaded", () => {
+  duplicateCards();
+  setLanguage(currentLang);
+  updateButtonText();
+});
+
+// Rating
+// دالة لتكرار عناصر rate للحركة المستمرة
+ // دالة لتكرار عناصر rate للحركة المستمرة
+function duplicateRateCards() {
+  const rateWrapper = document.querySelector('.rate-wrapper');
+  if (!rateWrapper) return;
+  
+  // التحقق من وجود عناصر مكررة بالفعل
+  const existingDuplicates = rateWrapper.querySelectorAll('.duplicate');
+  
+  // إذا لم توجد عناصر مكررة، قم بإضافتها
+  if (existingDuplicates.length === 0) {
+    const originalCards = rateWrapper.querySelectorAll('.rate-card:not(.duplicate)');
+    originalCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.classList.add('duplicate');
+      rateWrapper.appendChild(clone);
+    });
+  }
+}
+
+// استدعاء الدالة عند تحميل الصفحة
+window.addEventListener('DOMContentLoaded', duplicateRateCards);
